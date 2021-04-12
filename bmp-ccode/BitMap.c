@@ -171,7 +171,6 @@ int _RGB888_RGB666(struct BitMapStream *bs)
 {
 	FILE 	*Out;
 	char	buff[30];
-	char	obuff[30];
 
 	int ret = 0,i,j,matrix;
 
@@ -190,17 +189,17 @@ int _RGB888_RGB666(struct BitMapStream *bs)
 			ret = fread((void *)buff, 1, 24, bs->fp);
 		for(j = 0; j < 24; j+=matrix)
 		{
-			buff[j]		=	buff[j] >>2 &0xff;
-			buff[j+1]	=	buff[j+1] >>2 &0xff;
-			buff[j+2]	=	buff[j+2] >>2 &0xff;
+			buff[j]		=	(buff[j]) >>2 &0xff;
+			buff[j+1]	=	(buff[j+1]*17/10) >>2 &0xff;
+			buff[j+2]	=	(buff[j+2]*7/10) >>2 &0xff;
 			if(matrix == 4)
 			{
 				buff[j+3]	=	buff[j+3] >>2;
-				fprintf(Out,"0x%.2x,0x%.2x,0x%.2x,0x%.2x,",buff[j]&0xff,buff[j+1]&0xff,buff[j+2]&0xff,buff[j+3]&0xff);
+				fprintf(Out,"0x%.2x,0x%.2x,0x%.2x,0x%.2x,",buff[j+2]&0xff,buff[j+1]&0xff,buff[j]&0xff,buff[j+3]&0xff);
 			}
 			else
 			{
-				fprintf(Out,"0x%.2x,0x%.2x,0x%.2x,",buff[j+2]&0xff,buff[j]&0xff,buff[j+1]&0xff);
+				fprintf(Out,"0x%.2x,0x%.2x,0x%.2x,",buff[j+2]&0xff,buff[j+1]&0xff,buff[j]&0xff);
 			}
 		}
 		fprintf(Out,"\n");
