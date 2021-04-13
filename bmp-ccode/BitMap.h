@@ -42,10 +42,11 @@ struct	BitMapInfo
 };
 
 
-int	openBitStream(struct BitMapStream *bs);
+int	openBitStream(struct BitMapStream *bs,const char *fileName);
 int closeBitStream(struct BitMapStream *bs);
 int	getBitMapHdr(struct BitMapStream *bs, struct BitMapHdr *fHdr);
 int	getBitMapInfo(struct BitMapStream *bs, struct	BitMapInfo *bi);
-
+int _RGB888_RGB565(struct BitMapStream *bs);
+int _RGB888_RGB666(struct BitMapStream *bs);
 
 #endif
